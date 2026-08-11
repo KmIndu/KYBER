@@ -1,0 +1,123 @@
+openapi: "3.0.3"
+info:
+  title: Insurance API
+  version: "1.0.0"
+
+paths: {}
+
+components:
+  schemas:
+    Customer:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - email
+      properties:
+        customer_id:
+          type: integer
+          format: int64
+        first_name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        last_name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          pattern: "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$"
+        phone:
+          type: string
+          pattern: "^\\+?[0-9]{7,15}$"
+          nullable: true
+        date_of_birth:
+          type: string
+          format: date
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+            - suspended
+          default: active
+
+    Policy:
+      type: object
+      required:
+        - customer_id
+        - policy_number
+        - policy_type
+        - start_date
+        - end_date
+        - premium
+        - coverage_amount
+      properties:
+        policy_id:
+          type: integer
+          format: int64
+        customer_id:
+          type: integer
+          format: int64
+        policy_number:
+          type: string
+          minLength: 5
+          maxLength: 50
+        policy_type:
+          type: string
+          enum:
+            - life
+            - health
+            - auto
+            - home
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        premium:
+          type: number
+          format: double
+          minimum: 0.01
+          maximum: 999999.99
+        coverage_amount:
+          type: number
+          format: double
+          minimum: 1000
+          maximum: 10000000
+
+    Claim:
+      type: object
+      required:
+        - policy_id
+        - claim_date
+        - claim_amount
+      properties:
+        claim_id:
+          type: integer
+          format: int64
+        policy_id:
+          type: integer
+          format: int64
+        claim_date:
+          type: string
+          format: date
+        claim_amount:
+          type: number
+          format: double
+          minimum: 0.01
+        description:
+          type: string
+          maxLength: 1000
+          nullable: true
+        status:
+          type: string
+          enum:
+            - pending
+            - approved
+            - rejected
+            - under_review
+          default: pending

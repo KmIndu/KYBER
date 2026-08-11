@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: synthetic-data-backend
+    env: docker
+    branch: main
+    dockerfilePath: backend/Dockerfile
+    envVars:
+      - key: HOST
+        value: "0.0.0.0"
+      - key: PORT
+        value: "8000"
+      - key: LOG_LEVEL
+        value: "INFO"
+      - key: DEBUG
+        value: "false"
+      - key: CORS_ORIGINS
+        value: "https://synthetic-data-frontend.onrender.com"
+      - key: AI_MODEL
+        value: "claude-opus-4-6"
+      - key: AI_API_FORMAT
+        value: "openai"
+
+  - type: web
+    name: synthetic-data-frontend
+    env: docker
+    branch: main
+    dockerfilePath: frontend/Dockerfile
+    envVars:
+      - key: VITE_API_BASE
+        value: "https://synthetic-data-backend.onrender.com/api"

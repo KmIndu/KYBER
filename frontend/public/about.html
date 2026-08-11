@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="0;url=/about">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — KYBER Synthetic Data Forge | Team JEDI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --kyber-green: #00FF9F;
+  --kyber-green-dim: #00cc7f;
+  --accent-purple: #9D4EDD;
+  --accent-cyan: #00E6CC;
+  --teal-deep: #0A3D3A;
+  --dark-void: #0B0F14;
+  --page-bg: #1b1b1f;
+  --card-bg: #202127;
+  --card-bg-alt: #252529;
+  --border-dark: #2e2e32;
+  --border-mid: #3a3a3e;
+  --text-primary: rgba(255,255,245,0.86);
+  --text-secondary: rgba(235,235,245,0.6);
+  --text-muted: rgba(235,235,245,0.45);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 400;
+  color: var(--text-primary);
+  background: var(--page-bg);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+canvas#starfield {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.page-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Navbar (matches app) ── */
+.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--dark-void);
+  border-bottom: 1px solid rgba(10,61,58,0.6);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+}
+
+.top-nav .logo {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--kyber-green);
+  letter-spacing: 0.15em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.top-nav .logo img {
+  width: 32px; height: 32px;
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgba(0,255,159,0.3);
+}
+
+.top-nav .nav-links {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  background: rgba(10,61,58,0.2);
+  border-radius: 8px;
+  padding: 4px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.top-nav .nav-links a {
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.top-nav .nav-links a:hover {
+  color: var(--kyber-green);
+  background: rgba(0,255,159,0.05);
+}
+
+.top-nav .nav-links a.active {
+  color: var(--kyber-green);
+  background: rgba(0,255,159,0.15);
+  box-shadow: 0 0 8px rgba(0,255,159,0.15);
+}
+
+/* ── Section divider ── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--kyber-green), var(--accent-purple), transparent);
+  opacity: 0.2;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4, h5, h6 { font-family: 'Orbitron', sans-serif; }
+.mono { font-family: 'Share Tech Mono', monospace; }
+
+/* ── Section base ── */
+section {
+  padding: 100px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--kyber-green);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+}
+
+/* ── Backgrounds ── */
+.bg-dark { background: var(--dark-void); }
+.bg-card { background: var(--card-bg); }
+.bg-page { background: var(--page-bg); }
+
+.full-width {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.full-width > .inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ============ HERO ============ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 60px 24px;
+}
+
+.hero-glow {
+  position: absolute;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,255,159,0.08) 0%, rgba(157,78,221,0.04) 40%, transparent 70%);
+  animation: pulse-glow 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.4em;
+  color: var(--kyber-green);
+  animation: fade-up 0.8s ease forwards;
+  opacity: 0;
+  animation-delay: 0.2s;
+}
+
+.hero-title {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  background: linear-gradient(135deg, #ffffff, var(--kyber-green), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 30px rgba(0,255,159,0.3));
+  margin: 16px 0 8px;
+  animation: fade-up 0.8s ease forwards;
+  opacity: 0;
+  animation-delay: 0.4s;
+}
+
+.hero-subtitle {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.8rem, 2vw, 1.1rem);
+  color: var(--accent-purple);
+  letter-spacing: 0.3em;
+  animation: fade-up 0.8s ease forwards;
+  opacity: 0;
+  animation-delay: 0.6s;
+}
+
+.hero-tagline {
+  margin-top: 24px;
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 1rem;
+  animation: fade-up 0.8s ease forwards;
+  opacity: 0;
+  animation-delay: 0.8s;
+}
+
+.hero-tagline span {
+  font-style: normal;
+  color: var(--kyber-green);
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: fade-up 0.8s ease forwards;
+  opacity: 0;
+  animation-delay: 1.2s;
+}
+
+.scroll-hint .label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--text-muted);
+}
+
+.scroll-hint .chevron {
+  width: 20px; height: 20px;
+  border-right: 2px solid var(--kyber-green);
+  border-bottom: 2px solid var(--kyber-green);
+  transform: rotate(45deg);
+  animation: bounce 1.5s ease-in-out infinite;
+}
+
+/* ============ MISSION ============ */
+.mission-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.mission-text p {
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  font-size: 1.05rem;
+}
+
+.crystal-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 360px;
+}
+
+.crystal {
+  width: 140px; height: 200px;
+  clip-path: polygon(50% 0%, 100% 30%, 85% 100%, 15% 100%, 0% 30%);
+  background: linear-gradient(180deg, var(--kyber-green), var(--accent-cyan));
+  filter: blur(1px);
+  animation: crystal-pulse 3s ease-in-out infinite;
+  position: relative;
+  z-index: 2;
+}
+
+.crystal-glow {
+  position: absolute;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,255,159,0.15), transparent 70%);
+  z-index: 1;
+}
+
+.crystal-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(0,255,159,0.15);
+  animation: ring-expand 3s ease-out infinite;
+}
+
+.crystal-ring:nth-child(3) { width: 180px; height: 180px; animation-delay: 0s; }
+.crystal-ring:nth-child(4) { width: 240px; height: 240px; animation-delay: 1s; }
+.crystal-ring:nth-child(5) { width: 300px; height: 300px; animation-delay: 2s; }
+
+/* ============ FEATURES ============ */
+.features-intro {
+  max-width: 680px;
+  color: var(--text-secondary);
+  margin-bottom: 48px;
+  font-size: 1.05rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.feature-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-dark);
+  border-radius: 12px;
+  padding: 28px 22px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 0%; height: 2px;
+  background: linear-gradient(90deg, var(--kyber-green), var(--accent-cyan));
+  transition: width 0.4s ease;
+}
+
+.feature-card:hover {
+  border-color: rgba(0,255,159,0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(0,255,159,0.05);
+}
+
+.feature-card:hover::before { width: 100%; }
+
+.feature-card .icon {
+  font-size: 1.8rem;
+  margin-bottom: 14px;
+  width: 44px; height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(0,255,159,0.08);
+}
+
+.feature-card h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--kyber-green);
+  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+}
+
+.feature-card p {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* ============ TEAM ============ */
+.team-intro {
+  color: var(--text-secondary);
+  margin-bottom: 48px;
+  max-width: 600px;
+  font-size: 1.05rem;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.team-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-dark);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.team-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0,255,159,0.35);
+  box-shadow: 0 8px 30px rgba(0,255,159,0.06);
+}
+
+.team-card:nth-child(2):hover,
+.team-card:nth-child(4):hover {
+  border-color: rgba(157,78,221,0.4);
+  box-shadow: 0 8px 30px rgba(157,78,221,0.06);
+}
+
+.team-avatar {
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: linear-gradient(180deg, rgba(0,255,159,0.04), transparent);
+}
+
+.team-card:nth-child(2) .team-avatar,
+.team-card:nth-child(4) .team-avatar {
+  background: linear-gradient(180deg, rgba(157,78,221,0.04), transparent);
+}
+
+.avatar-orb {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,255,159,0.2), transparent 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.team-card:nth-child(2) .avatar-orb,
+.team-card:nth-child(4) .avatar-orb {
+  background: radial-gradient(circle, rgba(157,78,221,0.2), transparent 70%);
+}
+
+.team-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: var(--kyber-green);
+  border: 1px solid rgba(0,255,159,0.25);
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(0,255,159,0.05);
+}
+
+.team-card:nth-child(2) .team-badge,
+.team-card:nth-child(4) .team-badge {
+  color: var(--accent-purple);
+  border-color: rgba(157,78,221,0.25);
+  background: rgba(157,78,221,0.05);
+}
+
+.team-info {
+  padding: 20px;
+}
+
+.team-info h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.team-info .role {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--kyber-green);
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+.team-card:nth-child(2) .team-info .role,
+.team-card:nth-child(4) .team-info .role {
+  color: var(--accent-purple);
+}
+
+.team-info .bio {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* ============ PHILOSOPHY ============ */
+.philosophy-quote {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 60px;
+  position: relative;
+  padding: 40px 0;
+}
+
+.philosophy-quote::before {
+  content: '\201C';
+  font-family: 'Orbitron', sans-serif;
+  font-size: 6rem;
+  position: absolute;
+  top: -10px; left: 50%;
+  transform: translateX(-50%);
+  color: rgba(0,255,159,0.1);
+  line-height: 1;
+}
+
+.philosophy-quote p {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: 400;
+  color: var(--kyber-green);
+  line-height: 1.8;
+  opacity: 0.85;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.why-item {
+  padding: 20px 24px;
+  border-left: 2px solid rgba(0,255,159,0.15);
+  border-radius: 0 8px 8px 0;
+  background: var(--card-bg);
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.why-item:hover {
+  border-left-color: var(--kyber-green);
+  background: var(--card-bg-alt);
+}
+
+.why-item .number {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: rgba(0,255,159,0.08);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.why-item h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.why-item p {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+/* ============ CTA ============ */
+.cta-section {
+  text-align: center;
+  position: relative;
+}
+
+.cta-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,255,159,0.04), transparent 70%);
+  pointer-events: none;
+}
+
+.cta-section h2 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.cta-section .subtext {
+  color: var(--text-secondary);
+  margin-bottom: 36px;
+  font-size: 1.05rem;
+}
+
+.cta-btn {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--kyber-green);
+  border: 2px solid var(--kyber-green);
+  background: transparent;
+  padding: 14px 44px;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s, box-shadow 0.3s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.cta-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 0%; height: 100%;
+  background: var(--kyber-green);
+  transition: width 0.4s ease;
+  z-index: -1;
+}
+
+.cta-btn:hover {
+  color: var(--dark-void);
+  box-shadow: 0 0 20px rgba(0,255,159,0.2);
+}
+.cta-btn:hover::before { width: 100%; }
+
+/* ============ FOOTER ============ */
+footer {
+  background: var(--dark-void);
+  border-top: 1px solid rgba(10,61,58,0.4);
+  padding: 16px 24px;
+  text-align: center;
+}
+
+footer p {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+footer .kyber-text {
+  font-family: 'Orbitron', sans-serif;
+  color: rgba(0,255,159,0.5);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+footer .team-text {
+  color: rgba(0,255,159,0.4);
+  font-weight: 500;
+}
+
+/* ============ SCROLL REVEAL ============ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============ KEYFRAMES ============ */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes crystal-pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@keyframes ring-expand {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+  50% { transform: rotate(45deg) translateY(8px); }
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 900px) {
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .mission-grid { grid-template-columns: 1fr; }
+  .crystal-container { height: 280px; }
+  .top-nav .nav-links { display: none; }
+}
+
+@media (max-width: 680px) {
+  .why-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  .features-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .team-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<div class="page-content">
+
+  <!-- TOP NAV (mirrors app Navbar) -->
+  <nav class="top-nav">
+    <a href="/" class="logo">
+      <img src="/logo.jpg" alt="KYBER">
+      <span>KYBER</span>
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/generate">Generate</a>
+      <a href="/about.html" class="active">About</a>
+      <a href="/history">History</a>
+    </div>
+    <div style="width:80px"></div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <p class="hero-eyebrow">TEAM JEDI PRESENTS</p>
+    <h1 class="hero-title">KYBER</h1>
+    <p class="hero-subtitle">SYNTHETIC DATA FORGE</p>
+    <p class="hero-tagline"><span>May the Synthetic Data Be With You</span> — generating balanced data with the Force</p>
+    <div class="scroll-hint">
+      <span class="label">EXPLORE</span>
+      <div class="chevron"></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MISSION -->
+  <section class="full-width bg-dark" style="padding:100px 0;">
+    <div class="inner">
+      <div class="mission-grid">
+        <div class="mission-text reveal">
+          <p class="section-label">OUR MISSION</p>
+          <h2 class="section-title">Built by warriors. Powered by pure data.</h2>
+          <p>In the vast galaxy of software testing, teams struggle with incomplete, biased, and unrealistic test data. We set out to change that — forging synthetic datasets that mirror production with perfect fidelity.</p>
+          <p>KYBER was born from the belief that quality data shouldn't require production access, compliance waivers, or weeks of manual crafting. A single schema should be enough to conjure thousands of realistic, constraint-aware records.</p>
+          <p>Our mission is to arm every QA warrior, developer, and data engineer with the power to generate perfect test data in seconds — respecting referential integrity, business rules, and domain context.</p>
+        </div>
+        <div class="crystal-container reveal">
+          <div class="crystal-glow"></div>
+          <div class="crystal"></div>
+          <div class="crystal-ring"></div>
+          <div class="crystal-ring"></div>
+          <div class="crystal-ring"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WHAT IS KYBER -->
+  <section class="full-width bg-page" style="padding:100px 0;">
+    <div class="inner">
+      <p class="section-label reveal">THE TOOL</p>
+      <h2 class="section-title reveal">What is KYBER?</h2>
+      <p class="features-intro reveal">KYBER is an AI-powered synthetic data generation engine that transforms your schemas, specs, and feature files into production-grade test data — instantly and without compromising privacy.</p>
+
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="icon">⚡</div>
+          <h3>High-Fidelity Generation</h3>
+          <p>Produces data that mirrors real-world distributions, patterns, and edge cases — indistinguishable from production datasets.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="icon">⚖️</div>
+          <h3>Balanced by Design</h3>
+          <p>Ensures proportional representation across categories, demographics, and value ranges for unbiased testing coverage.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="icon">🔮</div>
+          <h3>Privacy Preserving</h3>
+          <p>Zero real PII. Every record is synthetically generated — safe for shared environments, CI/CD pipelines, and demos.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="icon">🛸</div>
+          <h3>Domain Agnostic</h3>
+          <p>Banking, insurance, healthcare, retail — KYBER adapts its generation strategy to any industry vertical automatically.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="icon">🌐</div>
+          <h3>Scalable at Warp Speed</h3>
+          <p>From 10 rows to 1,000,000 — generation scales linearly with consistent quality and constraint adherence.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="icon">🧬</div>
+          <h3>Schema-Aware Intelligence</h3>
+          <p>Understands foreign keys, check constraints, unique indexes, and data types to produce relationally coherent datasets.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TEAM -->
+  <section class="full-width bg-dark" style="padding:100px 0;">
+    <div class="inner">
+      <p class="section-label reveal">THE ORDER</p>
+      <h2 class="section-title reveal">Meet Team JEDI</h2>
+      <p class="team-intro reveal">Four Jedi Knights united by a single purpose: to eliminate bad test data from the galaxy. Each brings a unique discipline to the forge.</p>
+
+      <div class="team-grid">
+        <div class="team-card reveal">
+          <div class="team-avatar">
+            <div class="avatar-orb">👩‍💻</div>
+            <span class="team-badge">JEDI KNIGHT</span>
+          </div>
+          <div class="team-info">
+            <h3>Padawan Alpha</h3>
+            <p class="role">AI ARCHITECT</p>
+            <p class="bio">Designs the neural pathways that power KYBER's intelligent generation engine. Specializes in LLM orchestration and prompt engineering.</p>
+          </div>
+        </div>
+
+        <div class="team-card reveal">
+          <div class="team-avatar">
+            <div class="avatar-orb">👨‍🔬</div>
+            <span class="team-badge">JEDI KNIGHT</span>
+          </div>
+          <div class="team-info">
+            <h3>Padawan Beta</h3>
+            <p class="role">DATA ENGINEER</p>
+            <p class="bio">Architects the data pipelines and schema parsers that transform raw DDL into rich generation metadata. Master of SQL dialects.</p>
+          </div>
+        </div>
+
+        <div class="team-card reveal">
+          <div class="team-avatar">
+            <div class="avatar-orb">👩‍🚀</div>
+            <span class="team-badge">JEDI KNIGHT</span>
+          </div>
+          <div class="team-info">
+            <h3>Padawan Gamma</h3>
+            <p class="role">ML ENGINEER</p>
+            <p class="bio">Builds the statistical models ensuring generated data matches real-world distributions. Champion of coherence validation.</p>
+          </div>
+        </div>
+
+        <div class="team-card reveal">
+          <div class="team-avatar">
+            <div class="avatar-orb">👨‍🎨</div>
+            <span class="team-badge">JEDI KNIGHT</span>
+          </div>
+          <div class="team-info">
+            <h3>Padawan Delta</h3>
+            <p class="role">PRODUCT & UX</p>
+            <p class="bio">Crafts the experience layer that makes complex data generation feel effortless. Obsessed with developer joy and workflow speed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PHILOSOPHY -->
+  <section class="full-width bg-page" style="padding:100px 0;">
+    <div class="inner">
+      <p class="section-label reveal">OUR PHILOSOPHY</p>
+      <h2 class="section-title reveal">Why we built this</h2>
+
+      <div class="philosophy-quote reveal">
+        <p>The best test data is data that never existed in production — yet behaves exactly as if it did.</p>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-item reveal">
+          <div class="number">01</div>
+          <h3>Production data is dangerous</h3>
+          <p>Real customer data in test environments creates compliance nightmares. KYBER eliminates that risk entirely with zero-PII synthetic generation.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="number">02</div>
+          <h3>Manual test data doesn't scale</h3>
+          <p>Handcrafting INSERT statements for 50 tables with foreign keys is medieval. Schema-aware automation generates thousands of consistent rows in seconds.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="number">03</div>
+          <h3>Edge cases matter most</h3>
+          <p>Bugs hide at boundaries. KYBER systematically generates negative, boundary, and duplicate cases that manual testers inevitably miss.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="number">04</div>
+          <h3>Context changes everything</h3>
+          <p>A "name" column in healthcare vs. retail means different things. Domain-aware generation produces contextually realistic values, not random strings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CTA -->
+  <section class="cta-section" style="padding:120px 24px;">
+    <div class="cta-glow"></div>
+    <h2 class="reveal">Ready to forge your data?</h2>
+    <p class="subtext reveal">Upload a schema. Get production-grade synthetic data in seconds.</p>
+    <a href="/generate" class="cta-btn reveal">LAUNCH KYBER</a>
+  </section>
+
+  <!-- FOOTER (matches app footer) -->
+  <footer>
+    <p>&copy; 2026 <span class="kyber-text">KYBER</span> &middot; Built by <span class="team-text">Team JEDI</span> @ Sun Life &middot; May the Synthetic Data Be With You</p>
+  </footer>
+
+</div>
+
+<script>
+// ── Starfield Animation ──────────────────────────────────────
+(function() {
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  const STAR_COUNT = 220;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function init() {
+    resize();
+    stars = [];
+    for (let i = 0; i < STAR_COUNT; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: 0.2 + Math.random() * 1.2,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.5 + Math.random() * 1.5
+      });
+    }
+  }
+
+  function draw(time) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const star of stars) {
+      const alpha = 0.3 + 0.7 * ((Math.sin(time * 0.001 * star.speed + star.phase) + 1) / 2);
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(200, 255, 230, ${alpha})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => {
+    resize();
+    stars.forEach(s => {
+      s.x = Math.random() * canvas.width;
+      s.y = Math.random() * canvas.height;
+    });
+  });
+
+  init();
+  requestAnimationFrame(draw);
+})();
+
+// ── Scroll Reveal ────────────────────────────────────────────
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+})();
+</script>
+</body>
+</html>

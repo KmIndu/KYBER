@@ -1,0 +1,8 @@
+{
+    "snyk.advanced.autoSelectOrganization": false,
+    "sonarlint.connectedMode.project": {
+        "connectionId": "sonarqube-prod",
+        "projectKey": "A_AWB_payslips-job_8f59521f-3553-43fb-92f4-a8bb924ea4f1"
+    },
+    "snyk.advanced.organization": "6eed43fc-9402-42f2-a8f7-2fc1bab92c2c"
+}

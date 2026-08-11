@@ -1,0 +1,233 @@
+openapi: "3.0.3"
+info:
+  title: Sun Life Claims Processing API
+  version: "2.1.0"
+  description: REST API for insurance claims intake, adjudication, and payment processing.
+
+paths: {}
+
+components:
+  schemas:
+
+    # ── Customer / Policyholder ───────────────────────────
+    CustomerProfile:
+      type: object
+      required:
+        - id
+        - first_name
+        - last_name
+        - email
+        - date_of_birth
+      properties:
+        id:
+          type: integer
+          description: Unique customer identifier
+        first_name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        last_name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        phone:
+          type: string
+          pattern: "^\\+?[1-9]\\d{1,14}$"
+        date_of_birth:
+          type: string
+          format: date
+        sin_last_four:
+          type: string
+          pattern: "^\\d{4}$"
+          description: Last 4 digits of Social Insurance Number
+        preferred_language:
+          type: string
+          enum:
+            - en
+            - fr
+        risk_category:
+          type: string
+          enum:
+            - low
+            - medium
+            - high
+            - critical
+
+    # ── Policy ────────────────────────────────────────────
+    PolicySummary:
+      type: object
+      required:
+        - policy_number
+        - product_type
+        - premium
+        - coverage_amount
+        - status
+      properties:
+        policy_number:
+          type: string
+          pattern: "^SL-\\d{4}-\\d{6}$"
+          description: "Format: SL-YYYY-NNNNNN"
+        product_type:
+          type: string
+          enum:
+            - life
+            - health
+            - dental
+            - disability
+            - critical_illness
+            - travel
+        premium:
+          type: number
+          format: double
+          minimum: 10.00
+          maximum: 50000.00
+        coverage_amount:
+          type: number
+          format: double
+          minimum: 1000.00
+          maximum: 10000000.00
+        deductible:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 25000.00
+        status:
+          type: string
+          enum:
+            - active
+            - lapsed
+            - cancelled
+            - pending
+        payment_frequency:
+          type: string
+          enum:
+            - monthly
+            - quarterly
+            - semi_annual
+            - annual
+
+    # ── Claim ─────────────────────────────────────────────
+    ClaimSubmission:
+      type: object
+      required:
+        - claim_number
+        - policy_number
+        - claim_type
+        - claim_amount
+        - incident_date
+      properties:
+        claim_number:
+          type: string
+          pattern: "^CLM-\\d{8}$"
+        policy_number:
+          type: string
+          pattern: "^SL-\\d{4}-\\d{6}$"
+        claim_type:
+          type: string
+          enum:
+            - medical
+            - dental
+            - disability
+            - death
+            - critical_illness
+            - travel
+        claim_amount:
+          type: number
+          format: double
+          minimum: 1.00
+          maximum: 5000000.00
+        incident_date:
+          type: string
+          format: date
+        diagnosis_code:
+          type: string
+          pattern: "^[A-Z]\\d{2}(\\.\\d{1,2})?$"
+          description: ICD-10 diagnosis code
+        provider_name:
+          type: string
+          maxLength: 200
+        supporting_documents:
+          type: integer
+          minimum: 0
+          maximum: 20
+
+    # ── Adjudication Result ───────────────────────────────
+    AdjudicationResult:
+      type: object
+      required:
+        - claim_number
+        - decision
+        - reviewed_by
+      properties:
+        claim_number:
+          type: string
+          pattern: "^CLM-\\d{8}$"
+        decision:
+          type: string
+          enum:
+            - approved
+            - denied
+            - partial
+            - pending_info
+        approved_amount:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 5000000.00
+        denial_reason:
+          type: string
+          enum:
+            - pre_existing_condition
+            - policy_lapsed
+            - exclusion_applies
+            - insufficient_documentation
+            - waiting_period
+            - fraud_suspected
+          nullable: true
+        reviewed_by:
+          type: string
+          maxLength: 100
+        review_date:
+          type: string
+          format: date
+        escalated:
+          type: boolean
+
+    # ── Payment ───────────────────────────────────────────
+    ClaimPayment:
+      type: object
+      required:
+        - payment_id
+        - claim_number
+        - amount
+        - payment_method
+      properties:
+        payment_id:
+          type: integer
+        claim_number:
+          type: string
+          pattern: "^CLM-\\d{8}$"
+        amount:
+          type: number
+          format: double
+          minimum: 0.01
+          maximum: 5000000.00
+        payment_method:
+          type: string
+          enum:
+            - direct_deposit
+            - cheque
+            - eft
+        payee_name:
+          type: string
+          maxLength: 200
+        payment_date:
+          type: string
+          format: date
+        reference_number:
+          type: string
+          pattern: "^PAY-\\d{10}$"
