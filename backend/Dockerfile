@@ -14,8 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY app/ app/
 
-# Non-root user for security
-RUN adduser --disabled-password --no-create-home appuser
+# Create writable runtime data directory and give ownership to the app user
+RUN mkdir -p /app/data /app/data/history && adduser --disabled-password --no-create-home appuser && chown -R appuser:appuser /app/data
 USER appuser
 
 EXPOSE 8000
