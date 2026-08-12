@@ -17,6 +17,7 @@ FROM nginx:alpine
 
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+RUN cp /usr/share/nginx/html/index.html /usr/share/nginx/html/200.html || true
 
 EXPOSE 80
 
